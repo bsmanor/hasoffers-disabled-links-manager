@@ -1,21 +1,36 @@
-<div style="width: 600px;" fxLayout="column" fxLayoutAlign="center start">
-  <mat-list fxLayout="column wrap" fxLayoutGap="5px">
-    <mat-list-item *ngFor="let rule of disabledLinks">
-      {{rule.aff_info1}}
-      {{rule.aff_info2}}
-      {{rule.aff_info3}}
-      {{rule.aff_info4}}
-      {{rule.aff_info5}}
-      <button 
-        mat-raised-button 
-        color="warn" 
-        (click)="deleteDisabledLink(rule.id)"
-        style="float:right"
-      >
-        DELETE
-      </button>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <mat-list fxLayout="column wrap" fxLayoutGap="3px"  style="text-align:center">
+    <mat-list-item fxLayout="row" fxLayoutGap="10px"> 
+        <div class="border-right" fxFlex="100px">SUB ID 1</div>
+        <div class="border-right" fxFlex="100px">SUB ID 2</div>
+        <div class="border-right" fxFlex="100px">SUB ID 3</div>
+        <div class="border-right" fxFlex="100px">SUB ID 4</div>
+        <div class="border-right" fxFlex="100px">SUB ID 5</div>
+        <div class="border-right" fxFlex="100px">SOURCE</div>
+        <div class="border-right" fxFlex="100px"></div>
+    </mat-list-item>
+    <mat-list-item *ngFor="let rule of disabledLinks" fxLayout="row" fxLayoutGap="10px">
+  
+        <div class="border-right" fxFlex="100px">{{rule.aff_info1}}</div>
+        <div class="border-right" fxFlex="100px">{{rule.aff_info2}}</div>
+        <div class="border-right" fxFlex="100px">{{rule.aff_info3}}</div>
+        <div class="border-right" fxFlex="100px">{{rule.aff_info4}}</div>
+        <div class="border-right" fxFlex="100px">{{rule.aff_info5}}</div>
+        <div class="border-right" fxFlex="100px">{{rule.source}}</div>
+        
+        <div fxFlex="100px">
+          <button 
+            mat-raised-button 
+            color="warn" 
+            (click)="deleteDisabledLink(rule.id)"
+            style="float:right"
+          >
+            DELETE
+          </button>
+        </div>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
+
 </div>
 
