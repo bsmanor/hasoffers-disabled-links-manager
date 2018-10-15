@@ -13,10 +13,10 @@ export class HoApiService {
 
   constructor(private http: HttpClient) { }
 
-  getDisabledLinks() {
+  getDisabledLinks(netId, netToken) {
     return this.http.get(
-      `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
-      NetworkToken=${this.networkToken}&
+      `https://${netId}.api.hasoffers.com/Apiv3/json?
+      NetworkToken=${netToken}&
       Target=OfferDisabledLink&
       Method=findAll&
       fields[]=strict&

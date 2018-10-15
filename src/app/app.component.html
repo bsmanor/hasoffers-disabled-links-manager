@@ -1,22 +1,28 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <mat-list fxLayout="column wrap" fxLayoutGap="3px"  style="text-align:center">
     <mat-list-item fxLayout="row" fxLayoutGap="10px"> 
-        <div class="border-right" fxFlex="100px">SUB ID 1</div>
-        <div class="border-right" fxFlex="100px">SUB ID 2</div>
-        <div class="border-right" fxFlex="100px">SUB ID 3</div>
-        <div class="border-right" fxFlex="100px">SUB ID 4</div>
-        <div class="border-right" fxFlex="100px">SUB ID 5</div>
-        <div class="border-right" fxFlex="100px">SOURCE</div>
-        <div class="border-right" fxFlex="100px"></div>
+        <div class="border-right" fxFlex="1 1 100px">OFFER</div>
+        <div class="border-right" fxFlex="1 1 100px">AFFILIATE</div>
+        <div class="border-right" fxFlex="1 1 200px">SUB ID 1</div>
+        <div class="border-right" fxFlex="1 1 200px">SUB ID 2</div>
+        <div class="border-right" fxFlex="1 1 200px">SUB ID 3</div>
+        <div class="border-right" fxFlex="1 1 200px">SUB ID 4</div>
+        <div class="border-right" fxFlex="1 1 200px">SUB ID 5</div>
+        <div class="border-right" fxFlex="1 1 200px">SOURCE</div>
+        <div class="border-right" fxFlex="1 1 100px">STRICT</div>
+        <div class="border-right" fxFlex="1 1 200px"></div>
     </mat-list-item>
     <mat-list-item *ngFor="let rule of disabledLinks" fxLayout="row" fxLayoutGap="10px">
   
-        <div class="border-right" fxFlex="100px">{{rule.aff_info1}}</div>
-        <div class="border-right" fxFlex="100px">{{rule.aff_info2}}</div>
-        <div class="border-right" fxFlex="100px">{{rule.aff_info3}}</div>
-        <div class="border-right" fxFlex="100px">{{rule.aff_info4}}</div>
-        <div class="border-right" fxFlex="100px">{{rule.aff_info5}}</div>
-        <div class="border-right" fxFlex="100px">{{rule.source}}</div>
+        <div class="border-right" fxFlex="1 1 100px">{{rule.offer_id}}</div>
+        <div class="border-right" fxFlex="1 1 100px">{{rule.affiliate_id}}</div>
+        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info1}}</div>
+        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info2}}</div>
+        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info3}}</div>
+        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info4}}</div>
+        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info5}}</div>
+        <div class="border-right" fxFlex="1 1 200px">{{rule.source}}</div>
+        <div class="border-right" fxFlex="1 1 100px">{{rule.strict === '1' ? 'ON' : 'OFF'}}</div>
         
         <div fxFlex="100px">
           <button 
