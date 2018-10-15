@@ -16,6 +16,14 @@
     httpStatus: number;
     errors?: (null)[] | null;
     errorMessage?: null;
+    data: Data;
+  }
+
+  export interface Data {
+    count: number;
+    current: number;
+    page: number;
+    pageCount: number;
     data: {};
   }
 
@@ -33,4 +41,3 @@
     aff_info2: string;
     aff_info1: string;
   }
-  

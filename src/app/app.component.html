@@ -1,41 +1,123 @@
-<div fxLayout="column" fxLayoutAlign="center center">
-  <mat-list fxLayout="column wrap" fxLayoutGap="3px"  style="text-align:center">
-    <mat-list-item fxLayout="row" fxLayoutGap="10px"> 
-        <div class="border-right" fxFlex="1 1 100px">OFFER</div>
-        <div class="border-right" fxFlex="1 1 100px">AFFILIATE</div>
-        <div class="border-right" fxFlex="1 1 200px">SUB ID 1</div>
-        <div class="border-right" fxFlex="1 1 200px">SUB ID 2</div>
-        <div class="border-right" fxFlex="1 1 200px">SUB ID 3</div>
-        <div class="border-right" fxFlex="1 1 200px">SUB ID 4</div>
-        <div class="border-right" fxFlex="1 1 200px">SUB ID 5</div>
-        <div class="border-right" fxFlex="1 1 200px">SOURCE</div>
-        <div class="border-right" fxFlex="1 1 100px">STRICT</div>
-        <div class="border-right" fxFlex="1 1 200px"></div>
-    </mat-list-item>
-    <mat-list-item *ngFor="let rule of disabledLinks" fxLayout="row" fxLayoutGap="10px">
+<div *ngIf="primaryFilter.open" fxLayout="row" style="width:100vw; height:100vh;" fxLayoutAlign="center center">
+  <mat-card style="width:500px; height:500px; text-align:center;">
+
+    <mat-card-title>We found {{totalCount}} rules.</mat-card-title>
+    <mat-card-subtitle>Lets try filtering out some of them.<br>
+    Select at least one of the following:</mat-card-subtitle>
+
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <mat-form-field appearance="outline">
+        <input #offer type="text" matInput placeholder="Offer ID" [(ngModel)]="primaryFilter.offer" name="offer">
+      </mat-form-field>
   
-        <div class="border-right" fxFlex="1 1 100px">{{rule.offer_id}}</div>
-        <div class="border-right" fxFlex="1 1 100px">{{rule.affiliate_id}}</div>
-        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info1}}</div>
-        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info2}}</div>
-        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info3}}</div>
-        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info4}}</div>
-        <div class="border-right" fxFlex="1 1 200px">{{rule.aff_info5}}</div>
-        <div class="border-right" fxFlex="1 1 200px">{{rule.source}}</div>
-        <div class="border-right" fxFlex="1 1 100px">{{rule.strict === '1' ? 'ON' : 'OFF'}}</div>
-        
-        <div fxFlex="100px">
-          <button 
-            mat-raised-button 
-            color="warn" 
-            (click)="deleteDisabledLink(rule.id)"
-            style="float:right"
-          >
-            DELETE
-          </button>
-        </div>
-      <mat-divider></mat-divider>
+      <mat-form-field appearance="outline">
+        <input #affiliate type="text" matInput placeholder="Affiliate ID" [(ngModel)]="primaryFilter.affiliate" name="affiliate">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <input #source type="text" matInput placeholder="Source" [(ngModel)]="primaryFilter.source" name="source">
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="togglePrimaryFilter()">NEXT</button>
+    </mat-card-content>
+
+  </mat-card>
+</div>
+
+
+<div fxLayout="column" fxLayoutAlign="center center" *ngIf="!primaryFilter.open">
+  <mat-list fxLayout="column wrap" fxLayoutGap="3px"  style="text-align:center">
+
+
+    <!-- HEADERS -->
+    <mat-list-item fxLayout="row" fxLayoutGap="10px"> 
+      <div class="border-right" fxFlex="1 1 100px">OFFER</div>
+      <div class="border-right" fxFlex="1 1 100px">AFFILIATE</div>
+      <div class="border-right" fxFlex="1 1 150px">SUB ID 1</div>
+      <div class="border-right" fxFlex="1 1 150px">SUB ID 2</div>
+      <div class="border-right" fxFlex="1 1 150px">SUB ID 3</div>
+      <div class="border-right" fxFlex="1 1 150px">SUB ID 4</div>
+      <div class="border-right" fxFlex="1 1 150px">SUB ID 5</div>
+      <div class="border-right" fxFlex="1 1 150px">SOURCE</div>
+      <div class="border-right" fxFlex="1 1 100px">STRICT</div>
+      <div fxFlex="1 1 100px"><button mat-raised-button (click)="toggleFilters()">{{showFilters ? 'Hide' : 'Show'}} Filters</button></div>
     </mat-list-item>
+
+    <!-- Input Filters -->
+    <mat-list-item [style.visibility]="showFilters ? 'visible' : 'hidden'" fxLayout="row" fxLayoutGap="10px"> 
+
+      <mat-form-field appearance="outline" fxFlex="1 1 100px">
+        <input #offer type="text" matInput [(ngModel)]="filters.offerId" name="offer">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 100px">
+        <input #affiliate type="text" matInput [(ngModel)]="filters.affiliateId" name="affiliate">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 150px">
+        <input #sub1 type="text" matInput [(ngModel)]="filters.sub1" name="sub_1" >
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 150px">
+        <input #sub2 type="text" matInput [(ngModel)]="filters.sub2" name="sub_2" >
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 150px">
+        <input #sub3 type="text" matInput [(ngModel)]="filters.sub3" name="sub_3" >
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 150px">
+        <input #sub4 type="text" matInput [(ngModel)]="filters.sub4" name="sub_4" >
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 150px">
+        <input #sub5 type="text" matInput [(ngModel)]="filters.sub5" name="sub_5" >
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 150px">
+        <input #source type="text" matInput [(ngModel)]="filters.source" name="source">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="1 1 100px">
+        <input #strict type="text" matInput [(ngModel)]="filters.strict" name="strict">
+      </mat-form-field>
+      <div class="border-right" fxFlex="1 1 100px"></div>
+
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <!-- DATA ROWS -->
+
+    <!-- Loop through all disabled Links -->
+    <ng-container *ngFor="let rule of disabledLinks">
+      <!-- Show list item only if they match the filters queries -->
+      <mat-list-item
+        fxLayout="row" fxLayoutGap="10px"
+        *ngIf="rule.offer_id.includes(offer.value) && 
+               rule.affiliate_id.includes(affiliate.value) &&
+               rule.aff_info1.includes(sub1.value) &&
+               rule.aff_info2.includes(sub2.value) &&
+               rule.aff_info3.includes(sub3.value) &&
+               rule.aff_info4.includes(sub4.value) &&
+               rule.aff_info5.includes(sub5.value) &&
+               rule.source.includes(source.value) &&
+               rule.strict.includes(strict.value)">
+          <div class="border-right" fxFlex="1 1 100px">{{rule.offer_id}}</div>
+          <div class="border-right" fxFlex="1 1 100px">{{rule.affiliate_id}}</div>
+          <div class="border-right" fxFlex="1 1 150px">{{rule.aff_info1}}</div>
+          <div class="border-right" fxFlex="1 1 150px">{{rule.aff_info2}}</div>
+          <div class="border-right" fxFlex="1 1 150px">{{rule.aff_info3}}</div>
+          <div class="border-right" fxFlex="1 1 150px">{{rule.aff_info4}}</div>
+          <div class="border-right" fxFlex="1 1 150px">{{rule.aff_info5}}</div>
+          <div class="border-right" fxFlex="1 1 150px">{{rule.source}}</div>
+          <div class="border-right" fxFlex="1 1 100px">{{rule.strict === '1' ? 'ON' : 'OFF'}}</div>
+            
+          <div fxFlex="100px">
+            <button 
+              mat-raised-button 
+              color="warn" 
+              (click)="deleteDisabledLink(rule.id)"
+              style="float:right"
+            >
+              DELETE
+            </button>
+          </div>
+    
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </ng-container>
   </mat-list>
 
 </div>

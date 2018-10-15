@@ -12,22 +12,62 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
 
-  networkId = 'manor';
-  networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
-  disabledLinks: OfferDisabledLink[] = [];
-  rules: Observable<Object>;
-  test: any;
+  // networkId = 'manor';
+  // networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
+  networkId = 'wmadv';
+  networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
+  totalCount = null;
+  primaryFilter = {
+    open: false,
+    offer: '',
+    affiliate: '',
+    source: ''
+  };
 
-  constructor(
-    private hoService: HoApiService
-  ) {
-    this.getDisabledLinks();
+  disabledLinks: OfferDisabledLink[] = [];
+  showFilters = false;
+  filters = {
+    offerId: '',
+    affiliateId: '',
+    sub1: '',
+    sub2: '',
+    sub3: '',
+    sub4: '',
+    sub5: '',
+    source: '',
+    strict: ''
+  };
+
+
+  constructor(private hoService: HoApiService) {
+    this.hoService.getTotalCount(this.networkId, this.networkToken).subscribe( (res: DisabledLinksResponse) => {
+      this.totalCount = res.response.data.count;
+      if (res.response.data.count > 300) {
+        this.primaryFilter.open = true;
+      } else {
+        this.getDisabledLinks(1);
+      }
+    });
   }
 
-  getDisabledLinks() {
-    this.hoService.getDisabledLinks(this.networkId, this.networkToken).subscribe( (res: DisabledLinksResponse) => {
-      this.disabledLinks = Object.values(res.response.data).map( (rule) => rule['OfferDisabledLink']);
-      console.log(this.disabledLinks);      
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
+  togglePrimaryFilter() {
+    if (this.primaryFilter.open) {
+      this.primaryFilter.open = !this.primaryFilter.open;
+      this.getDisabledLinks(1);
+    } else {
+      this.primaryFilter.open = !this.primaryFilter.open;
+    }
+  }
+
+  getDisabledLinks(pageNum) {
+    this.hoService.getDisabledLinks(this.networkId, this.networkToken, 1, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
+    .subscribe( (res: DisabledLinksResponse) => {
+      this.disabledLinks = Object.values(res.response.data.data).map( (rule) => rule['OfferDisabledLink']);
+      console.log(this.disabledLinks);
     });
   }
 
@@ -35,8 +75,8 @@ export class AppComponent {
     this.hoService.deleteDisabledLink(this.networkId, this.networkToken, id)
     .subscribe(res => {
       console.log(res);
-      this.getDisabledLinks();
-    })
+      this.getDisabledLinks(1);
+    });
   }
 
 
