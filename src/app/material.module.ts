@@ -19,6 +19,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -48,7 +49,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatProgressSpinnerModule, 
     MatTooltipModule, 
     MatSnackBarModule, 
-    MatExpansionModule
+    MatExpansionModule,
+    MatPaginatorModule
   ],
   exports: [
     MatFormFieldModule,
@@ -75,7 +77,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatProgressSpinnerModule, 
     MatTooltipModule, 
     MatSnackBarModule, 
-    MatExpansionModule
+    MatExpansionModule,
+    MatPaginatorModule
   ],
 })
 export class MaterialModule { }

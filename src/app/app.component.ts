@@ -3,7 +3,7 @@ import { HoApiService } from '../assets/services/ho-api.service';
 import { DisabledLinksResponse } from '../assets/models/getDisabledLinksResponse';
 import { OfferDisabledLink } from '../assets/models/getDisabledLinksResponse';
 import { Observable } from 'rxjs';
-
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -24,28 +24,24 @@ export class AppComponent {
     source: ''
   };
 
-  disabledLinks: OfferDisabledLink[] = [];
+  disabledLinks: OfferDisabledLink[] = []; // Array containing all network's disabled link rules
   showFilters = false;
-  filters = {
-    offerId: '',
-    affiliateId: '',
-    sub1: '',
-    sub2: '',
-    sub3: '',
-    sub4: '',
-    sub5: '',
-    source: '',
-    strict: ''
-  };
-
+  filters = {offerId: '', affiliateId: '', sub1: '', sub2: '', sub3: '', sub4: '', sub5: '', source: '', strict: ''};
+  // MatPaginator Inputs
+  pageSize = 10;
+  pageSizeOptions: number[] = [10, 25, 50];
+  pageIndex = 1;
+  // MatPaginator Output
+  pageEvent: PageEvent;
 
   constructor(private hoService: HoApiService) {
+    this.primaryFilter.open = false;
     this.hoService.getTotalCount(this.networkId, this.networkToken).subscribe( (res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       if (res.response.data.count > 300) {
         this.primaryFilter.open = true;
       } else {
-        this.getDisabledLinks(1);
+        this.getDisabledLinks();
       }
     });
   }
@@ -57,14 +53,22 @@ export class AppComponent {
   togglePrimaryFilter() {
     if (this.primaryFilter.open) {
       this.primaryFilter.open = !this.primaryFilter.open;
-      this.getDisabledLinks(1);
+      this.getDisabledLinks();
     } else {
       this.primaryFilter.open = !this.primaryFilter.open;
     }
   }
 
-  getDisabledLinks(pageNum) {
-    this.hoService.getDisabledLinks(this.networkId, this.networkToken, 1, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
+
+  handlePaginationChange(event: PageEvent) {
+    console.log(event);
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.getDisabledLinks()
+  }
+    
+  getDisabledLinks() {
+    this.hoService.getDisabledLinks(this.networkId, this.networkToken, this.pageSize, this.pageIndex, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
     .subscribe( (res: DisabledLinksResponse) => {
       this.disabledLinks = Object.values(res.response.data.data).map( (rule) => rule['OfferDisabledLink']);
       console.log(this.disabledLinks);
@@ -75,7 +79,7 @@ export class AppComponent {
     this.hoService.deleteDisabledLink(this.networkId, this.networkToken, id)
     .subscribe(res => {
       console.log(res);
-      this.getDisabledLinks(1);
+      this.getDisabledLinks();
     });
   }
 

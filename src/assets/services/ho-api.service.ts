@@ -25,14 +25,13 @@ export class HoApiService {
       limit=${limit}&page=1`);
   }
 
-  getDisabledLinks(netId, netToken, page, offer?, affiliate?, source?) {
+  getDisabledLinks(netId, netToken, limit, page, offer?, affiliate?, source?) {
     let offerFilter = '';
     let affiliateFilter = '';
     let sourceFilter = '';
     if (offer > 1) { offerFilter = `filters[offer_id]=${offer}&`; }
     if (affiliate > 1) { affiliateFilter = `filters[affiliate_id]=${affiliate}&`; }
     if (source > 1) { sourceFilter = `filters[source]=${source}&`; }
-    const limit = 30;
     console.log(`https://${netId}.api.hasoffers.com/Apiv3/json?
     NetworkToken=${netToken}&
     Target=OfferDisabledLink&

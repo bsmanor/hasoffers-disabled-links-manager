@@ -25,9 +25,8 @@
 </div>
 
 
-<div fxLayout="column" fxLayoutAlign="center center" *ngIf="!primaryFilter.open">
+<div fxLayout="column" fxLayoutAlign="center center" *ngIf="disabledLinks.length > 0">
   <mat-list fxLayout="column wrap" fxLayoutGap="3px"  style="text-align:center">
-
 
     <!-- HEADERS -->
     <mat-list-item fxLayout="row" fxLayoutGap="10px"> 
@@ -119,6 +118,14 @@
         </mat-list-item>
       </ng-container>
   </mat-list>
+
+  <mat-paginator 
+    [length]="totalCount"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="pageEvent = handlePaginationChange($event)">
+  </mat-paginator>
 
 </div>
 
