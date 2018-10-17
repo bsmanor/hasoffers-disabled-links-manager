@@ -4,6 +4,7 @@ import { DisabledLinksResponse } from '../assets/models/getDisabledLinksResponse
 import { OfferDisabledLink } from '../assets/models/getDisabledLinksResponse';
 import { Observable } from 'rxjs';
 import {PageEvent} from '@angular/material';
+import { LimitCharactersPipe } from './pipes/limit-characters.pipe';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,7 @@ export class AppComponent {
   // MatPaginator Inputs
   pageSize = 10;
   pageSizeOptions: number[] = [10, 25, 50];
-  pageIndex = 1;
+  pageIndex = 0;
   // MatPaginator Output
   pageEvent: PageEvent;
 
@@ -64,12 +65,13 @@ export class AppComponent {
     console.log(event);
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this.getDisabledLinks()
+    this.getDisabledLinks();
   }
-    
+
   getDisabledLinks() {
-    this.hoService.getDisabledLinks(this.networkId, this.networkToken, this.pageSize, this.pageIndex, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
+    this.hoService.getDisabledLinks(this.networkId, this.networkToken, this.pageSize, this.pageIndex + 1, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
     .subscribe( (res: DisabledLinksResponse) => {
+      this.totalCount = res.response.data.count;
       this.disabledLinks = Object.values(res.response.data.data).map( (rule) => rule['OfferDisabledLink']);
       console.log(this.disabledLinks);
     });

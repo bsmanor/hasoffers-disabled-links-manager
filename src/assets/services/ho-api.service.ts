@@ -77,7 +77,7 @@ export class HoApiService {
       NetworkToken=${netToken}&
       Target=OfferDisabledLink&
       Method=delete&
-      id=${id}`)
+      id=${id}`);
   }
 
 
