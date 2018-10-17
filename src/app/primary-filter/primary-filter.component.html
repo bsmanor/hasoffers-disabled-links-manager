@@ -1,4 +1,4 @@
-<mat-card style="width:500px; height:500px; text-align:center;">
+<mat-card style="min-width:500px; height:600px; text-align:center; overflow-y: auto">
 
   <mat-card-title>We found {{totalCount}} rules.</mat-card-title>
   <mat-card-subtitle>Lets try filtering out some of them.<br>
@@ -6,19 +6,47 @@
 
   <mat-card-content fxLayout="column" fxLayoutAlign="center center">
     <mat-form-field appearance="outline">
-      <input #offer type="text" matInput placeholder="Offer ID" [(ngModel)]="primaryFilter.offer" name="offer">
+      <input #id type="text" matInput placeholder="Rule ID" [(ngModel)]="filters.id" name="id">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <input #affiliate type="text" matInput placeholder="Affiliate ID" [(ngModel)]="primaryFilter.affiliate" name="affiliate">
+      <input #offer type="text" matInput placeholder="Offer ID" [(ngModel)]="filters.offer_id" name="offer">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <input #source type="text" matInput placeholder="Source" [(ngModel)]="primaryFilter.source" name="source">
+      <input #affiliate type="text" matInput placeholder="Affiliate ID" [(ngModel)]="filters.affiliate_id" name="affiliate">
     </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <input #source type="text" matInput placeholder="Source" [(ngModel)]="filters.source" name="source">
+    </mat-form-field>
+    
+    <div *ngIf="showAdditionalFilters" fxLayout="column" fxLayoutAlign="center center">
+      <mat-form-field appearance="outline">
+        <input #aff_info1 type="text" matInput placeholder="Sub ID 1" [(ngModel)]="filters.aff_info1" name="sub1">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input #aff_info2 type="text" matInput placeholder="Sub ID 2" [(ngModel)]="filters.aff_info2" name="sub2">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input #aff_info3 type="text" matInput placeholder="Sub ID 3" [(ngModel)]="filters.aff_info3" name="sub3">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input #aff_info4 type="text" matInput placeholder="Sub ID 4" [(ngModel)]="filters.aff_info4" name="sub4">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input #aff_info5 type="text" matInput placeholder="Sub ID 5" [(ngModel)]="filters.aff_info5" name="sub5">
+      </mat-form-field>
+
+    </div>
+
     <div fxLayout="column" fxLayoutGap="10px">
-      <button mat-raised-button color="accent" (click)="togglePrimaryFilter()" style="width:200px">MORE FILTERS</button>
-      <button mat-raised-button color="primary" (click)="togglePrimaryFilter()" style="width:200px">NEXT</button>
+      <button mat-raised-button color="accent" (click)="toggleAdditionalFilters()" style="width:200px">{{showAdditionalFilters ? "SHOW LESS" : "MORE FILTERS"}}</button>
+      <button mat-raised-button color="primary" (click)="rulesCount()" style="width:200px">NEXT</button>
     </div>
   </mat-card-content>
 

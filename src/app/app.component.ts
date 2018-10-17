@@ -56,7 +56,7 @@ export class AppComponent {
         this.primaryFilter.open = false;
         this.hoService.getDisabledLinks();
       }
-    })
+    });
   }
 
   togglePrimaryFilter() {

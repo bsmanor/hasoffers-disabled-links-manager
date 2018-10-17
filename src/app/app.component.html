@@ -1,5 +1,5 @@
 <div *ngIf="primaryFilter.open" fxLayout="row" style="width:100vw; height:100vh;" fxLayoutAlign="center center">
-  <app-primary-filter></app-primary-filter>
+  <app-primary-filter [totalCount]="totalCount"></app-primary-filter>
 </div>
 
 
@@ -40,27 +40,27 @@
 
         <mat-form-field appearance="standard" fxFlex="1 1 150px">
           <mat-label>Sub ID 1</mat-label>
-          <input #sub1 type="text" matInput [(ngModel)]="filters.sub1" name="sub_1" >
+          <input #sub1 type="text" matInput [(ngModel)]="filters.sub1" name="sub1" >
         </mat-form-field>
         
         <mat-form-field appearance="standard" fxFlex="1 1 150px">
           <mat-label>Sub ID 2</mat-label>
-          <input #sub2 type="text" matInput [(ngModel)]="filters.sub2" name="sub_2" >
+          <input #sub2 type="text" matInput [(ngModel)]="filters.sub2" name="sub2" >
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="1 1 150px">
           <mat-label>Sub ID 3</mat-label>
-          <input #sub3 type="text" matInput [(ngModel)]="filters.sub3" name="sub_3" >
+          <input #sub3 type="text" matInput [(ngModel)]="filters.sub3" name="sub3" >
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="1 1 150px">
           <mat-label>Sub ID 4</mat-label>
-          <input #sub4 type="text" matInput [(ngModel)]="filters.sub4" name="sub_4" >
+          <input #sub4 type="text" matInput [(ngModel)]="filters.sub4" name="sub4" >
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="1 1 150px">
           <mat-label>Sub ID 5</mat-label>
-          <input #sub5 type="text" matInput [(ngModel)]="filters.sub5" name="sub_5" >
+          <input #sub5 type="text" matInput [(ngModel)]="filters.sub5" name="sub5" >
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="1 1 150px">

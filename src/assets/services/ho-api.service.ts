@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
 import { DisabledLinksResponse } from '../models/getDisabledLinksResponse';
 import { Observable } from 'rxjs';
-import { FiltersInterace } from './../models/filters';
+import { FiltersInterface, Filters } from './../models/filters';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +17,16 @@ export class HoApiService {
 
   constructor(private http: HttpClient) { }
 
-  getTotalCount(filters?: FiltersInterace) {
+  getTotalCount(filters?: FiltersInterface) {
+    const localFilters = new Filters(filters);
     const limit = 1;
-    let totalCount: number;
     return this.http.get(
       `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
       NetworkToken=${this.networkToken}&
       Target=OfferDisabledLink&
       Method=findAll&
       fields[]=id&
+      ${localFilters.filtersQueryString}
       limit=${limit}&page=1`);
   }
 
