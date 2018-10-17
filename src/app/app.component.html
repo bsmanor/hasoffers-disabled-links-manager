@@ -1,27 +1,5 @@
 <div *ngIf="primaryFilter.open" fxLayout="row" style="width:100vw; height:100vh;" fxLayoutAlign="center center">
-  <mat-card style="width:500px; height:500px; text-align:center;">
-
-    <mat-card-title>We found {{totalCount}} rules.</mat-card-title>
-    <mat-card-subtitle>Lets try filtering out some of them.<br>
-    Select at least one of the following:</mat-card-subtitle>
-
-    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-      <mat-form-field appearance="outline">
-        <input #offer type="text" matInput placeholder="Offer ID" [(ngModel)]="primaryFilter.offer" name="offer">
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-        <input #affiliate type="text" matInput placeholder="Affiliate ID" [(ngModel)]="primaryFilter.affiliate" name="affiliate">
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-        <input #source type="text" matInput placeholder="Source" [(ngModel)]="primaryFilter.source" name="source">
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" (click)="togglePrimaryFilter()">NEXT</button>
-    </mat-card-content>
-
-  </mat-card>
+  <app-primary-filter></app-primary-filter>
 </div>
 
 
@@ -48,7 +26,7 @@
     <div style="height:20px;"></div>
 
     <!-- Input Filters -->
-      <mat-list-item [style.visibility]="showFilters ? 'visible' : 'hidden'" fxLayout="row" fxLayoutGap="10px"> 
+      <div [style.visibility]="showFilters ? 'visible' : 'hidden'" fxLayout="row" fxLayoutGap="10px"> 
   
         <mat-form-field appearance="standard" fxFlex="1 1 100px">
           <mat-label>Offer ID</mat-label>
@@ -97,7 +75,7 @@
 
         <div class="border-right" fxFlex="1 1 100px"></div>
   
-      </mat-list-item>
+      </div>
       <mat-divider></mat-divider>
 
 

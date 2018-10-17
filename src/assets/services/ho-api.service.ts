@@ -3,37 +3,41 @@ import { HttpClient } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
 import { DisabledLinksResponse } from '../models/getDisabledLinksResponse';
 import { Observable } from 'rxjs';
+import { FiltersInterace } from './../models/filters';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoApiService {
 
-  networkId = 'manor';
-  networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
+  // networkId = 'manor';
+  // networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
+  networkId = 'wmadv';
+  networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
 
   constructor(private http: HttpClient) { }
 
-  getTotalCount(netId, netToken) {
+  getTotalCount(filters?: FiltersInterace) {
     const limit = 1;
+    let totalCount: number;
     return this.http.get(
-      `https://${netId}.api.hasoffers.com/Apiv3/json?
-      NetworkToken=${netToken}&
+      `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
+      NetworkToken=${this.networkToken}&
       Target=OfferDisabledLink&
       Method=findAll&
       fields[]=id&
       limit=${limit}&page=1`);
   }
 
-  getDisabledLinks(netId, netToken, limit, page, offer?, affiliate?, source?) {
+  getDisabledLinks(limit = 25, page = 1, offer?, affiliate?, source?) {
     let offerFilter = '';
     let affiliateFilter = '';
     let sourceFilter = '';
     if (offer > 1) { offerFilter = `filters[offer_id]=${offer}&`; }
     if (affiliate > 1) { affiliateFilter = `filters[affiliate_id]=${affiliate}&`; }
     if (source > 1) { sourceFilter = `filters[source]=${source}&`; }
-    console.log(`https://${netId}.api.hasoffers.com/Apiv3/json?
-    NetworkToken=${netToken}&
+    console.log(`https://${this.networkId}.api.hasoffers.com/Apiv3/json?
+    NetworkToken=${this.networkToken}&
     Target=OfferDisabledLink&
     Method=findAll&
     fields[]=strict&
@@ -51,8 +55,8 @@ export class HoApiService {
     ${offerFilter}${affiliateFilter}${sourceFilter}
     limit=${limit}&page=${page}`);
     return this.http.get(
-      `https://${netId}.api.hasoffers.com/Apiv3/json?
-      NetworkToken=${netToken}&
+      `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
+      NetworkToken=${this.networkToken}&
       Target=OfferDisabledLink&
       Method=findAll&
       fields[]=strict&
@@ -71,10 +75,10 @@ export class HoApiService {
       limit=${limit}&page=${page}`);
   }
 
-  deleteDisabledLink(netId, netToken, id) {
+  deleteDisabledLink(id) {
     return this.http.get(
-      `https://${netId}.api.hasoffers.com/Apiv3/json?
-      NetworkToken=${netToken}&
+      `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
+      NetworkToken=${this.networkToken}&
       Target=OfferDisabledLink&
       Method=delete&
       id=${id}`);

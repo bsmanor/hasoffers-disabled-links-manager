@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HoApiService } from '../assets/services/ho-api.service';
 import { DisabledLinksResponse } from '../assets/models/getDisabledLinksResponse';
 import { OfferDisabledLink } from '../assets/models/getDisabledLinksResponse';
@@ -19,6 +19,7 @@ export class AppComponent {
   networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
   totalCount = null;
   primaryFilter = {
+    minCount: 15, // Minimum rules in network that require primary filtering
     open: false,
     offer: '',
     affiliate: '',
@@ -37,18 +38,25 @@ export class AppComponent {
 
   constructor(private hoService: HoApiService) {
     this.primaryFilter.open = false;
-    this.hoService.getTotalCount(this.networkId, this.networkToken).subscribe( (res: DisabledLinksResponse) => {
-      this.totalCount = res.response.data.count;
-      if (res.response.data.count > 300) {
-        this.primaryFilter.open = true;
-      } else {
-        this.getDisabledLinks();
-      }
-    });
+    this.isPrimaryFiltersNeeded();
   }
 
   toggleFilters() {
     this.showFilters = !this.showFilters;
+  }
+
+  isPrimaryFiltersNeeded() {
+    this.hoService.getTotalCount().subscribe( (res: DisabledLinksResponse) => {
+      this.totalCount = res.response.data.count;
+      if (this.totalCount > this.primaryFilter.minCount) {
+        console.log(this.totalCount);
+        this.primaryFilter.open = true;
+      } else {
+        console.log(this.totalCount);
+        this.primaryFilter.open = false;
+        this.hoService.getDisabledLinks();
+      }
+    })
   }
 
   togglePrimaryFilter() {
@@ -69,7 +77,7 @@ export class AppComponent {
   }
 
   getDisabledLinks() {
-    this.hoService.getDisabledLinks(this.networkId, this.networkToken, this.pageSize, this.pageIndex + 1, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
+    this.hoService.getDisabledLinks(this.pageSize, this.pageIndex + 1, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
     .subscribe( (res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       this.disabledLinks = Object.values(res.response.data.data).map( (rule) => rule['OfferDisabledLink']);
@@ -78,7 +86,7 @@ export class AppComponent {
   }
 
   deleteDisabledLink(id) {
-    this.hoService.deleteDisabledLink(this.networkId, this.networkToken, id)
+    this.hoService.deleteDisabledLink(id)
     .subscribe(res => {
       console.log(res);
       this.getDisabledLinks();

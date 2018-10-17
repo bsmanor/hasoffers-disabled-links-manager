@@ -7,11 +7,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LimitCharactersPipe } from './pipes/limit-characters.pipe';
+import { PrimaryFilterComponent } from './primary-filter/primary-filter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LimitCharactersPipe
+    LimitCharactersPipe,
+    PrimaryFilterComponent
   ],
   imports: [
     BrowserModule,
