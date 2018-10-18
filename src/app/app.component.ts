@@ -1,3 +1,4 @@
+import { FiltersInterface } from './../assets/models/filters';
 import { Component, Input } from '@angular/core';
 import { HoApiService } from '../assets/services/ho-api.service';
 import { DisabledLinksResponse } from '../assets/models/getDisabledLinksResponse';
@@ -18,6 +19,7 @@ export class AppComponent {
   networkId = 'wmadv';
   networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
   totalCount = null;
+  globalFilters: FiltersInterface;
   primaryFilter = {
     minCount: 15, // Minimum rules in network that require primary filtering
     open: false,
@@ -28,7 +30,7 @@ export class AppComponent {
 
   disabledLinks: OfferDisabledLink[] = []; // Array containing all network's disabled link rules
   showFilters = false;
-  filters = {offerId: '', affiliateId: '', sub1: '', sub2: '', sub3: '', sub4: '', sub5: '', source: '', strict: ''};
+  filters = {id: '', offerId: '', affiliateId: '', sub1: '', sub2: '', sub3: '', sub4: '', sub5: '', source: '', strict: ''};
   // MatPaginator Inputs
   pageSize = 10;
   pageSizeOptions: number[] = [10, 25, 50];
@@ -59,6 +61,11 @@ export class AppComponent {
     });
   }
 
+  onFiltersReceived(filters) {
+    this.globalFilters = filters;
+    this.primaryFilter.open = false;
+    this.getDisabledLinks(filters)
+  }
   togglePrimaryFilter() {
     if (this.primaryFilter.open) {
       this.primaryFilter.open = !this.primaryFilter.open;
@@ -73,11 +80,11 @@ export class AppComponent {
     console.log(event);
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this.getDisabledLinks();
+    this.getDisabledLinks(this.globalFilters);
   }
 
-  getDisabledLinks() {
-    this.hoService.getDisabledLinks(this.pageSize, this.pageIndex + 1, this.primaryFilter.offer, this.primaryFilter.affiliate, this.primaryFilter.source)
+  getDisabledLinks(filters?) {
+    this.hoService.getDisabledLinks(this.pageSize, this.pageIndex + 1, filters)
     .subscribe( (res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       this.disabledLinks = Object.values(res.response.data.data).map( (rule) => rule['OfferDisabledLink']);

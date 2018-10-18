@@ -1,3 +1,4 @@
+import { BrandInformation } from './../models/brandInformation';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
@@ -14,6 +15,7 @@ export class HoApiService {
   // networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
   networkId = 'wmadv';
   networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
+  brandInformation: BrandInformation;
 
   constructor(private http: HttpClient) { }
 
@@ -30,13 +32,8 @@ export class HoApiService {
       limit=${limit}&page=1`);
   }
 
-  getDisabledLinks(limit = 25, page = 1, offer?, affiliate?, source?) {
-    let offerFilter = '';
-    let affiliateFilter = '';
-    let sourceFilter = '';
-    if (offer > 1) { offerFilter = `filters[offer_id]=${offer}&`; }
-    if (affiliate > 1) { affiliateFilter = `filters[affiliate_id]=${affiliate}&`; }
-    if (source > 1) { sourceFilter = `filters[source]=${source}&`; }
+  getDisabledLinks(limit = 25, page = 1, filters?: FiltersInterface) {
+    const localFilters = new Filters(filters);
     console.log(`https://${this.networkId}.api.hasoffers.com/Apiv3/json?
     NetworkToken=${this.networkToken}&
     Target=OfferDisabledLink&
@@ -53,13 +50,14 @@ export class HoApiService {
     fields[]=aff_info3&
     fields[]=aff_info2&
     fields[]=aff_info1&
-    ${offerFilter}${affiliateFilter}${sourceFilter}
+    ${localFilters.filtersQueryString}
     limit=${limit}&page=${page}`);
     return this.http.get(
       `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
       NetworkToken=${this.networkToken}&
       Target=OfferDisabledLink&
       Method=findAll&
+      fields[]=id&
       fields[]=strict&
       fields[]=source&
       fields[]=offer_id&
@@ -72,7 +70,7 @@ export class HoApiService {
       fields[]=aff_info3&
       fields[]=aff_info2&
       fields[]=aff_info1&
-      ${offerFilter}${affiliateFilter}${sourceFilter}
+      ${localFilters.filtersQueryString}
       limit=${limit}&page=${page}`);
   }
 
@@ -83,6 +81,27 @@ export class HoApiService {
       Target=OfferDisabledLink&
       Method=delete&
       id=${id}`);
+  }
+
+  validateNetorkCreds(id, token): boolean {
+    this.http.get(`https://${id}.api.hasoffers.com/Apiv3/json?NetworkToken=${token}&Target=Application&Method=getBrand`)
+    .subscribe( (res: BrandInformation) => {
+      if (res.response.status === 1) {
+        this.networkId = id;
+        this.networkToken = token; 
+        return true
+      } else {
+        return false
+      }
+    })
+    return
+  }
+
+  getBrandInformation(networkId, networkToken) {
+    this.http.get(`https://${networkId}.api.hasoffers.com/Apiv3/json?NetworkToken=${networkToken}&Target=Application&Method=getBrand`)
+    .subscribe( (res: BrandInformation) => {
+      this.brandInformation = res;
+    })
   }
 
 

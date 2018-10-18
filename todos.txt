@@ -1,1 +1,2 @@
 1. Update total count after filtering.    ----- done
+2. get brand information and show in interface

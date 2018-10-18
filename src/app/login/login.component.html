@@ -1,0 +1,18 @@
+<mat-card style="height:600px; width:500px;" fxLayout="column" fxLayoutAlign="center center">
+  
+  <mat-card-content>
+    <mat-form-field ppearance="outline">
+      <input #networkId type="text" matInput placeholder="NETWORK ID">
+    </mat-form-field>
+  
+    <mat-form-field ppearance="outline">
+      <input #networkToken type="text" matInput placeholder="NETWORK TOKEN">
+    </mat-form-field>
+  </mat-card-content>
+
+
+  <mat-card-actions>
+    <button mat-raised-button (click)="verifyNetorkCreds(networkId.value, networkToken.value)" color="primary">GO!</button>
+  </mat-card-actions>
+
+</mat-card>

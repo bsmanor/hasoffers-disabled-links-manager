@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { FiltersInterface } from './../../assets/models/filters';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HoApiService } from '../../assets/services/ho-api.service';
 import { DisabledLinksResponse } from '../../assets/models/getDisabledLinksResponse';
 import { OfferDisabledLink } from '../../assets/models/getDisabledLinksResponse';
@@ -12,6 +13,7 @@ import { Filters } from '../../assets/models/filters';
 export class PrimaryFilterComponent implements OnInit {
 
   @Input() totalCount: number;
+  @Output() filtersEmt = new EventEmitter<FiltersInterface>();
 
   filters = {
     id: null,
@@ -40,6 +42,9 @@ export class PrimaryFilterComponent implements OnInit {
     .subscribe((res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       console.log(this.totalCount);
+      if (this.totalCount < 300) {
+        this.filtersEmt.emit(this.filters);
+      }
     });
 
   }

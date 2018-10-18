@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LimitCharactersPipe } from './pipes/limit-characters.pipe';
 import { PrimaryFilterComponent } from './primary-filter/primary-filter.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LimitCharactersPipe,
-    PrimaryFilterComponent
+    PrimaryFilterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
