@@ -12,7 +12,8 @@ export class LoginComponent implements OnInit {
   @Output() validated = new EventEmitter<Brand>();
 
   title = `Login`;
-  subtitle: string;
+  subtitle = '';
+
 
   constructor(private hoApiService: HoApiService) { }
 
@@ -30,7 +31,6 @@ export class LoginComponent implements OnInit {
      })
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

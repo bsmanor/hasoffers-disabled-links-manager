@@ -1,11 +1,11 @@
-<mat-accordion>
+<mat-accordion  style="max-width:500px;">
   <mat-expansion-panel [expanded]="expand === true" (open)=toggleExpantion()>
     <mat-expansion-panel-header>
       <mat-panel-description>FILTERS</mat-panel-description>
       <mat-panel-description>Apply additional filters</mat-panel-description>
     </mat-expansion-panel-header>
       
-    <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center start" style="width:500px;">
+    <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center start">
       <mat-form-field appearance="standard">
         <mat-label>ID</mat-label>
         <input #offer type="text" matInput [(ngModel)]="filters.id" name="id">
@@ -57,7 +57,7 @@
       </mat-form-field>
     </div>
     
-    <button mat-raised-button (click)="filter()" style="width:auto; height:auto;" color="accent">APPLY FILTERS</button>
+    <button class="rounded nofocus" mat-raised-button (click)="filter()" style="width:auto; height:auto;" color="accent">APPLY FILTERS</button>
       
   </mat-expansion-panel>
 </mat-accordion>

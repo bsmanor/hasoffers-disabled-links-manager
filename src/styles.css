@@ -4,3 +4,7 @@
 .rounded {
   border-radius: 20px !important;
 }
+
+.nofocus:focus {
+  outline: none;
+}

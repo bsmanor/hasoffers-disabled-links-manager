@@ -38,9 +38,7 @@ export class AppComponent {
   pageIndex = 0;
   // MatPaginator Output
   pageEvent: PageEvent;
-
-  strTest = 'e6d3935e6bdf491fbbed917053d6508e';
-
+  
   constructor(private hoService: HoApiService) {
     this.primaryFilter.open = false;
   }

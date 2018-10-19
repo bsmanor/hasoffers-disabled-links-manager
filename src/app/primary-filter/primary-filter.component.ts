@@ -29,9 +29,9 @@ export class PrimaryFilterComponent implements OnInit {
   };
 
   showAdditionalFilters = false;
+  brand = '';
   title: string;
   subtitle: string;
-  message: string;
 
   constructor(private hoService: HoApiService) {
   }
@@ -50,16 +50,16 @@ export class PrimaryFilterComponent implements OnInit {
         this.filtersEmt.emit(this.filters);
       } else if (this.totalCount === 0) {
         this.title = '';
-        this.subtitle = '';
-        this.message = 'There are no results with the filters used.\nTry different ones.';
+        this.subtitle = 'There are no results with the filters used.';
       }
     });
     
   }
   
   ngOnInit() {
+    this.brand = this.hoService.brandInformation.response.data.Brand.network_name;
     this.title = `We found ${this.totalCount} rules.`;
-    this.subtitle = `Lets try filtering out some of them.\nSelect at least one or more of the following:`;
+    this.subtitle = `Lets try filtering out some of them. Select at least one or more of the following:`;
   }
 
 }

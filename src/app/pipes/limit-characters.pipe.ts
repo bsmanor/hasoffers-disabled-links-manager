@@ -6,24 +6,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class LimitCharactersPipe implements PipeTransform {
 
   transform(value: string, limit: number): string {
-    let tmpStr = '';
-    if (value.length > limit) {
-    // console.log('====================================');
-    // console.log('Initial value is ' + value);
-    // console.log('====================================');
-    // const lines = value.length / limit;
-    // let strToReturn = '';
-    // for (let i = 0; i < lines; i++) {
-    //   tmpStr.concat(value.slice((i * limit), ((i + 1) * limit)) + '\n'); 
-    // }
-    // console.log('tmpStr is: ');
-    // console.log(tmpStr);
-    
+    // if (value.length > limit) {
+    //   let str1 = value;
+    //   let str2 = '';
+    //   let lines = Math.round(value.length / limit);
 
-      return `${value.slice(0, limit)}
-      ${value.slice(limit, value.length)}`;
-    }
-    return;
+    //   for (let i = 0; i < lines; i++) {
+    //     str2 = str2 +'\n'+str1.slice(0, limit);
+    //     str1 = str1.slice(limit);
+    //   }
+    //   str2 = str2+'\n'+str1;
+    //   return str2;
+    // }
+    return value;
   }
 
 }

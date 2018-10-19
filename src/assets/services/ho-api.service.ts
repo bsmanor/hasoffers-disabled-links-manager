@@ -13,9 +13,9 @@ export class HoApiService {
 
   // networkId = 'manor';
   // networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
-  networkId = 'wmadv';
-  networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
-  brandInformation: BrandInformation;
+  networkId: string;
+  networkToken: string;
+  public brandInformation: BrandInformation;
 
   constructor(private http: HttpClient) { }
 
@@ -66,11 +66,19 @@ export class HoApiService {
   }
 
   validateNetorkCreds(id, token): Observable<any> {
+    this.http.get(`https://${id}.api.hasoffers.com/Apiv3/json?NetworkToken=${token}&Target=Application&Method=getBrand`)
+    .subscribe( (res: BrandInformation) => {
+      if (res.response.status === 1) {
+        this.networkId = id;
+        this.networkToken = token;
+        this.brandInformation = res;
+      }
+    })
     return this.http.get(`https://${id}.api.hasoffers.com/Apiv3/json?NetworkToken=${token}&Target=Application&Method=getBrand`);
   }
 
-  getBrandInformation(networkId, networkToken) {
-    this.http.get(`https://${networkId}.api.hasoffers.com/Apiv3/json?NetworkToken=${networkToken}&Target=Application&Method=getBrand`)
+  getBrandInformation() {
+    this.http.get(`https://${this.networkId}.api.hasoffers.com/Apiv3/json?NetworkToken=${this.networkToken}&Target=Application&Method=getBrand`)
     .subscribe( (res: BrandInformation) => {
       this.brandInformation = res;
     })
