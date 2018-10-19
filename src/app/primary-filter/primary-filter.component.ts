@@ -29,27 +29,37 @@ export class PrimaryFilterComponent implements OnInit {
   };
 
   showAdditionalFilters = false;
+  title: string;
+  subtitle: string;
+  message: string;
 
-  constructor(private hoService: HoApiService) {}
-
-
+  constructor(private hoService: HoApiService) {
+  }
+  
+  
   toggleAdditionalFilters() {
     this.showAdditionalFilters = !this.showAdditionalFilters;
   }
-
+  
   rulesCount() {
     this.hoService.getTotalCount(this.filters)
     .subscribe((res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       console.log(this.totalCount);
-      if (this.totalCount < 300) {
+      if (this.totalCount < 300 && this.totalCount > 0) {
         this.filtersEmt.emit(this.filters);
+      } else if (this.totalCount === 0) {
+        this.title = '';
+        this.subtitle = '';
+        this.message = 'There are no results with the filters used.\nTry different ones.';
       }
     });
-
+    
   }
-
+  
   ngOnInit() {
+    this.title = `We found ${this.totalCount} rules.`;
+    this.subtitle = `Lets try filtering out some of them.\nSelect at least one or more of the following:`;
   }
 
 }

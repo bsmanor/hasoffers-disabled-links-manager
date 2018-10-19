@@ -6,6 +6,7 @@ import { OfferDisabledLink } from '../assets/models/getDisabledLinksResponse';
 import { Observable } from 'rxjs';
 import {PageEvent} from '@angular/material';
 import { LimitCharactersPipe } from './pipes/limit-characters.pipe';
+import { Filters } from 'src/assets/models/filters';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,9 @@ export class AppComponent {
   // networkToken = 'NETIlDlNCCAsW39apdfi33CrecceQR';
   networkId = 'wmadv';
   networkToken = 'NET80o5jnM9Yn8hSSO5jYfX4eZnzvS';
+  isValidated = false;
   totalCount = null;
-  globalFilters: FiltersInterface;
+  filters: FiltersInterface;
   primaryFilter = {
     minCount: 15, // Minimum rules in network that require primary filtering
     open: false,
@@ -29,8 +31,6 @@ export class AppComponent {
   };
 
   disabledLinks: OfferDisabledLink[] = []; // Array containing all network's disabled link rules
-  showFilters = false;
-  filters = {id: '', offerId: '', affiliateId: '', sub1: '', sub2: '', sub3: '', sub4: '', sub5: '', source: '', strict: ''};
   // MatPaginator Inputs
   pageSize = 10;
   pageSizeOptions: number[] = [10, 25, 50];
@@ -40,21 +40,19 @@ export class AppComponent {
 
   constructor(private hoService: HoApiService) {
     this.primaryFilter.open = false;
+  }
+ 
+  onValidation(brand) {
+    this.isValidated = true;
     this.isPrimaryFiltersNeeded();
   }
-
-  toggleFilters() {
-    this.showFilters = !this.showFilters;
-  }
-
+  
   isPrimaryFiltersNeeded() {
     this.hoService.getTotalCount().subscribe( (res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       if (this.totalCount > this.primaryFilter.minCount) {
-        console.log(this.totalCount);
         this.primaryFilter.open = true;
       } else {
-        console.log(this.totalCount);
         this.primaryFilter.open = false;
         this.hoService.getDisabledLinks();
       }
@@ -62,10 +60,16 @@ export class AppComponent {
   }
 
   onFiltersReceived(filters) {
-    this.globalFilters = filters;
+    this.filters = filters;
     this.primaryFilter.open = false;
     this.getDisabledLinks(filters)
   }
+
+  onInternalFilter(filters: FiltersInterface) {
+    this.filters = filters;
+    this.getDisabledLinks(filters)
+  }
+
   togglePrimaryFilter() {
     if (this.primaryFilter.open) {
       this.primaryFilter.open = !this.primaryFilter.open;
@@ -77,10 +81,9 @@ export class AppComponent {
 
 
   handlePaginationChange(event: PageEvent) {
-    console.log(event);
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this.getDisabledLinks(this.globalFilters);
+    this.getDisabledLinks(this.filters);
   }
 
   getDisabledLinks(filters?) {
@@ -88,14 +91,12 @@ export class AppComponent {
     .subscribe( (res: DisabledLinksResponse) => {
       this.totalCount = res.response.data.count;
       this.disabledLinks = Object.values(res.response.data.data).map( (rule) => rule['OfferDisabledLink']);
-      console.log(this.disabledLinks);
     });
   }
 
   deleteDisabledLink(id) {
     this.hoService.deleteDisabledLink(id)
     .subscribe(res => {
-      console.log(res);
       this.getDisabledLinks();
     });
   }

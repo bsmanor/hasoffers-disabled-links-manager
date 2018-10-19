@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { LimitCharactersPipe } from './pipes/limit-characters.pipe';
 import { PrimaryFilterComponent } from './primary-filter/primary-filter.component';
 import { LoginComponent } from './login/login.component';
+import { InternalFiltersComponent } from './internal-filters/internal-filters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LimitCharactersPipe,
     PrimaryFilterComponent,
-    LoginComponent
+    LoginComponent,
+    InternalFiltersComponent
   ],
   imports: [
     BrowserModule,

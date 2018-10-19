@@ -1,0 +1,63 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-description>FILTERS</mat-panel-description>
+      <mat-panel-description>Apply additional filters</mat-panel-description>
+    </mat-expansion-panel-header>
+      
+    <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center start" style="width:500px;">
+      <mat-form-field appearance="standard">
+        <mat-label>ID</mat-label>
+        <input #offer type="text" matInput [(ngModel)]="filters.id" name="id">
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Offer ID</mat-label>
+        <input #offer type="text" matInput [(ngModel)]="filters.offer_id" name="offer">
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Affiliate ID</mat-label>
+        <input #affiliate type="text" matInput [(ngModel)]="filters.affiliate_id" name="affiliate">
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Sub ID 1</mat-label>
+        <input #sub1 type="text" matInput [(ngModel)]="filters.aff_info1" name="sub1" >
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Sub ID 2</mat-label>
+        <input #sub2 type="text" matInput [(ngModel)]="filters.aff_info2" name="sub2" >
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Sub ID 3</mat-label>
+        <input #sub3 type="text" matInput [(ngModel)]="filters.aff_info3" name="sub3" >
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Sub ID 4</mat-label>
+        <input #sub4 type="text" matInput [(ngModel)]="filters.aff_info4" name="sub4" >
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Sub ID 5</mat-label>
+        <input #sub5 type="text" matInput [(ngModel)]="filters.aff_info5" name="sub5" >
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Source</mat-label>
+        <input #source type="text" matInput [(ngModel)]="filters.source" name="source">
+      </mat-form-field>
+      
+      <mat-form-field appearance="standard">
+        <mat-label>Strict</mat-label>
+        <input #strict type="text" matInput [(ngModel)]="filters.strict" name="strict">
+      </mat-form-field>
+    </div>
+    
+    <button mat-raised-button (click)="filter()" style="width:auto; height:auto;" color="accent">APPLY FILTERS</button>
+      
+  </mat-expansion-panel>
+</mat-accordion>

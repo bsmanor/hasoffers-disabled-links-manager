@@ -1,18 +1,22 @@
-<mat-card style="height:600px; width:500px;" fxLayout="column" fxLayoutAlign="center center">
+<mat-card>
+
+  <!-- <img src="../../environments//photos/hasoffers-logo.png"> -->
+
+  <mat-card-title>{{title}}</mat-card-title>
   
-  <mat-card-content>
-    <mat-form-field ppearance="outline">
-      <input #networkId type="text" matInput placeholder="NETWORK ID">
+  <mat-card-content fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-form-field appearance="outline">
+      <input #networkId type="text" matInput placeholder="Network ID" value="wmadv">
     </mat-form-field>
   
-    <mat-form-field ppearance="outline">
-      <input #networkToken type="text" matInput placeholder="NETWORK TOKEN">
+    <mat-form-field appearance="outline">
+      <input #networkToken type="text" matInput placeholder="Netwoork token" value="NET80o5jnM9Yn8hSSO5jYfX4eZnzvS">
     </mat-form-field>
   </mat-card-content>
 
 
-  <mat-card-actions>
-    <button mat-raised-button (click)="verifyNetorkCreds(networkId.value, networkToken.value)" color="primary">GO!</button>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center start">
+    <button mat-raised-button (click)="validateNetorkCreds(networkId.value, networkToken.value)" color="primary">GO!</button>
   </mat-card-actions>
 
 </mat-card>

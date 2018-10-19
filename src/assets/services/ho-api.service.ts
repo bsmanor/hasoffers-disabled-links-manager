@@ -34,24 +34,6 @@ export class HoApiService {
 
   getDisabledLinks(limit = 25, page = 1, filters?: FiltersInterface) {
     const localFilters = new Filters(filters);
-    console.log(`https://${this.networkId}.api.hasoffers.com/Apiv3/json?
-    NetworkToken=${this.networkToken}&
-    Target=OfferDisabledLink&
-    Method=findAll&
-    fields[]=strict&
-    fields[]=source&
-    fields[]=offer_id&
-    fields[]=id&
-    fields[]=datetime&
-    fields[]=created_by&
-    fields[]=affiliate_id&
-    fields[]=aff_info5&
-    fields[]=aff_info4&
-    fields[]=aff_info3&
-    fields[]=aff_info2&
-    fields[]=aff_info1&
-    ${localFilters.filtersQueryString}
-    limit=${limit}&page=${page}`);
     return this.http.get(
       `https://${this.networkId}.api.hasoffers.com/Apiv3/json?
       NetworkToken=${this.networkToken}&
@@ -83,18 +65,8 @@ export class HoApiService {
       id=${id}`);
   }
 
-  validateNetorkCreds(id, token): boolean {
-    this.http.get(`https://${id}.api.hasoffers.com/Apiv3/json?NetworkToken=${token}&Target=Application&Method=getBrand`)
-    .subscribe( (res: BrandInformation) => {
-      if (res.response.status === 1) {
-        this.networkId = id;
-        this.networkToken = token; 
-        return true
-      } else {
-        return false
-      }
-    })
-    return
+  validateNetorkCreds(id, token): Observable<any> {
+    return this.http.get(`https://${id}.api.hasoffers.com/Apiv3/json?NetworkToken=${token}&Target=Application&Method=getBrand`);
   }
 
   getBrandInformation(networkId, networkToken) {

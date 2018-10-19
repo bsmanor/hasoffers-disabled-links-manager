@@ -1,5 +1,6 @@
 import { HoApiService } from './../../assets/services/ho-api.service';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { BrandInformation, Brand } from 'src/assets/models/brandInformation';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +9,25 @@ import { Component, OnInit, Output } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  @Output() verified
+  @Output() validated = new EventEmitter<Brand>();
+
+  title = `Please enter network ID and token`;
+  subtitle: string;
 
   constructor(private hoApiService: HoApiService) { }
 
-  async validateNetorkCreds(networkId, networkToken) {
+  validateNetorkCreds(networkId, networkToken) {
      this.hoApiService.validateNetorkCreds(networkId, networkToken)
+     .subscribe( (res: BrandInformation) => {
+        if (res.response.status === 1) {
+          console.log('verified!');
+          this.validated.emit(res.response.data.Brand)
+        } else {
+          this.title = `Oops!`;
+          this.subtitle = `One of the details you entered isn't correct.`
+        }
+       console.log();
+     })
   }
 
   ngOnInit() {

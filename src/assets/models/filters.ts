@@ -14,7 +14,7 @@ export class Filters {
 
   filtersQueryString = '';
 
-  constructor(filters: FiltersInterface) {
+  constructor(filters?: FiltersInterface) {
     if (filters) {
       for (const filter in this.filters) {
         if (filters[filter]) {
