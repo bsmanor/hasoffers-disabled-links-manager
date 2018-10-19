@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   @Output() validated = new EventEmitter<Brand>();
 
-  title = `Please enter network ID and token`;
+  title = `Login`;
   subtitle: string;
 
   constructor(private hoApiService: HoApiService) { }

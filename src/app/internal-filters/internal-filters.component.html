@@ -1,5 +1,5 @@
 <mat-accordion>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="expand === true" (open)=toggleExpantion()>
     <mat-expansion-panel-header>
       <mat-panel-description>FILTERS</mat-panel-description>
       <mat-panel-description>Apply additional filters</mat-panel-description>

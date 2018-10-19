@@ -23,7 +23,7 @@ export class AppComponent {
   totalCount = null;
   filters: FiltersInterface;
   primaryFilter = {
-    minCount: 15, // Minimum rules in network that require primary filtering
+    minCount: 100, // Minimum rules in network that require primary filtering
     open: false,
     offer: '',
     affiliate: '',
@@ -31,12 +31,15 @@ export class AppComponent {
   };
 
   disabledLinks: OfferDisabledLink[] = []; // Array containing all network's disabled link rules
+  headers = ['rule_id', 'offer_id', 'affiliate_id', 'affiliate_sub_id1','affiliate_sub_id2', 'affiliate_sub_id3', 'affiliate_sub_id4', 'affiliate_sub_id5','source','strict','delete']
   // MatPaginator Inputs
   pageSize = 10;
-  pageSizeOptions: number[] = [10, 25, 50];
+  pageSizeOptions: number[] = [10, 20, 50];
   pageIndex = 0;
   // MatPaginator Output
   pageEvent: PageEvent;
+
+  strTest = 'e6d3935e6bdf491fbbed917053d6508e';
 
   constructor(private hoService: HoApiService) {
     this.primaryFilter.open = false;

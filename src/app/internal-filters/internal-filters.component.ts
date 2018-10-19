@@ -11,15 +11,20 @@ export class InternalFiltersComponent implements OnInit {
   @Input() filters: FiltersInterface;
   @Output() filterEmt = new EventEmitter<FiltersInterface>();
 
+  expand = false; // whether the filters expender is expended (opened) or not (closed)
+
 
   constructor() {}
 
   filter() {
     this.filterEmt.emit(this.filters);
+    this.expand = false;
   }
 
-  toggleFilters() {
-    // this.showFilters = !this.showFilters;
+
+
+  toggleExpantion() {
+    this.expand !== this.expand;
   }
 
   ngOnInit() {
