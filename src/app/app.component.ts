@@ -8,6 +8,7 @@ import {PageEvent} from '@angular/material';
 import { LimitCharactersPipe } from './pipes/limit-characters.pipe';
 import { Filters } from 'src/assets/models/filters';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,7 +39,7 @@ export class AppComponent {
   pageIndex = 0;
   // MatPaginator Output
   pageEvent: PageEvent;
-  
+
   constructor(private hoService: HoApiService) {
     this.primaryFilter.open = false;
   }
@@ -104,3 +105,4 @@ export class AppComponent {
 
 
 }
+

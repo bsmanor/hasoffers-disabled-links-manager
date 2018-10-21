@@ -25,7 +25,7 @@
     style="max-width:500px; position:absolute; top:0px; display:block; z-index:10;">
   </app-internal-filters>
 
-  <table mat-table [dataSource]="disabledLinks" style="margin-top: 50px; z-index: -1; width:97vw;">
+  <table mat-table [dataSource]="disabledLinks" style="margin-top: 50px; z-index: -1; width:97vw; text-align: center;">
   
       <ng-container matColumnDef="rule_id">
         <th mat-header-cell *matHeaderCellDef> RULE ID </th>
@@ -69,7 +69,7 @@
 
       <ng-container matColumnDef="source">
         <th mat-header-cell *matHeaderCellDef> SOURCE </th>
-        <td mat-cell *matCellDef="let element" style="max-width: 100px; word-wrap: break-word;"> {{element.source}} </td>
+        <td mat-cell *matCellDef="let element" style="max-width: 100px; word-wrap: break-word; padding-right:10px;"> {{element.source}} </td>
       </ng-container>
       <ng-container matColumnDef="strict">
         <th mat-header-cell *matHeaderCellDef> STRICT </th>
@@ -83,7 +83,7 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="headers"></tr>
+      <tr mat-header-row *matHeaderRowDef="headers" style="text-align:center"></tr>
       <tr mat-row *matRowDef="let row; columns: headers;"></tr>
 
   </table>
